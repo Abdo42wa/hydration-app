@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 const MAX_WATER_AMOUNT = 4000;
-const MIN_WATER_AMOUNT = 2000;
+//const MIN_WATER_AMOUNT = 2000;
 const WaterCounter = () => {
     const [waterAmount, setWaterAmount] = useState(0);
     const [message, setMessage] = useState("");

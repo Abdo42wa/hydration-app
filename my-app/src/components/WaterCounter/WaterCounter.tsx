@@ -9,8 +9,6 @@ const WaterCounter = () => {
     const addWater = () => {
         const result = waterAmount + waterInput;
         if (result <= MAX_WATER_AMOUNT) {
-            localStorage.setItem('drankWaterAmount', `${result}`);
-            localStorage.setItem('Date', new Date().toLocaleDateString('lt-LT'));
             setWaterAmount(result);
             return;
         }
@@ -33,17 +31,16 @@ const WaterCounter = () => {
     const handleClose = () => {
         setMessage("");
     };
-
-
+    useEffect(() => {
+        localStorage.setItem('drankWaterAmount', `${waterAmount}`);
+        setCurrentDay();
+    }, [waterAmount])
 
     useEffect(() => {
         setCurrentDay();
     }, []);
 
-    useEffect(() => {
-        localStorage.setItem('drankWaterAmount', `${waterAmount}`);
-        setCurrentDay();
-    }, [waterAmount])
+
 
 
     return (
@@ -54,7 +51,7 @@ const WaterCounter = () => {
             >
                 <DialogContent>
                     <DialogContentText>
-                        <Alert severity="error">{message}</Alert>
+                        <Alert data-testid="alert" severity="error">{message}</Alert>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -63,11 +60,11 @@ const WaterCounter = () => {
             </Dialog>
 
 
-            <Typography>Drink water (2L - {MAX_WATER_AMOUNT / 1000}L)</Typography>
-            <Typography fontWeight={900}>{waterAmount} ml</Typography>
+            <Typography >Drink water (2L - {MAX_WATER_AMOUNT / 1000}L)</Typography>
+            <Typography data-testid='waterHeading' fontWeight={900}>{waterAmount} ml</Typography>
             <Typography>Enter water in milliliters</Typography>
-            <Input data-testid='waterInput' type='number' inputProps={{ min: 0 }} onChange={onWaterChange} />
-            <Button variant="outlined" color="success" size="small" onClick={() => addWater()}>Add</Button>
+            <Input data-testid='waterInput' placeholder='Enter water in milliliters' type='number' inputProps={{ min: 0 }} onChange={onWaterChange} />
+            <Button data-testid='addButton' variant="outlined" color="success" size="small" onClick={() => addWater()}>Add</Button>
         </>
     )
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.css';
 import WaterCounter from './components/WaterCounter/WaterCounter';
 

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Typography, Input, Alert, Button, Dialog, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { Typography, Input, Alert, Button, Dialog, DialogContent, DialogContentText, DialogActions, CardActions } from '@mui/material';
 const MAX_WATER_AMOUNT = 4000;
 const WaterCounter = () => {
-    const [waterAmount, setWaterAmount] = useState(Number(localStorage.getItem('drankWaterAmount')));
+    const [drankWaterAmount, setDrankWaterAmount] = useState(Number(localStorage.getItem('drankWaterAmount')));
     const [message, setMessage] = useState("");
     const [waterInput, setWaterInput] = useState(0);
 
     const addWater = () => {
-        const result = waterAmount + waterInput;
+        const result = drankWaterAmount + waterInput;
         if (result <= MAX_WATER_AMOUNT) {
-            setWaterAmount(result);
+            setDrankWaterAmount(result);
             return;
         }
         setMessage("Oops you have reached your limit ");
@@ -24,7 +24,7 @@ const WaterCounter = () => {
         const currentDate = new Date().toLocaleDateString('lt-LT');
         const storedDate = localStorage.getItem('Date');
         if (currentDate !== storedDate) {
-            setWaterAmount(0);
+            setDrankWaterAmount(0);
             localStorage.setItem('Date', currentDate);
         }
     }
@@ -32,9 +32,9 @@ const WaterCounter = () => {
         setMessage("");
     };
     useEffect(() => {
-        localStorage.setItem('drankWaterAmount', `${waterAmount}`);
+        localStorage.setItem('drankWaterAmount', `${drankWaterAmount}`);
         setCurrentDay();
-    }, [waterAmount])
+    }, [drankWaterAmount])
 
     useEffect(() => {
         setCurrentDay();
@@ -60,11 +60,14 @@ const WaterCounter = () => {
             </Dialog>
 
 
-            <Typography >Drink water (2L - {MAX_WATER_AMOUNT / 1000}L)</Typography>
-            <Typography data-testid='waterHeading' fontWeight={900}>{waterAmount} ml</Typography>
+            <Typography color='white' fontSize='27px'>Drink water (2L - {MAX_WATER_AMOUNT / 1000}L)</Typography>
+            <Typography fontWeight={1000}>{drankWaterAmount} ml</Typography>
             <Typography>Enter water in milliliters</Typography>
+
             <Input data-testid='waterInput' placeholder='Enter water in milliliters' type='number' inputProps={{ min: 0 }} onChange={onWaterChange} />
-            <Button data-testid='addButton' variant="outlined" color="success" size="small" onClick={() => addWater()}>Add</Button>
+            <CardActions sx={{ justifyContent: "center" }}>
+                <Button variant="contained" size="small" onClick={() => addWater()}>Add</Button>
+            </CardActions>
         </>
     )
 }

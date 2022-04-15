@@ -64,7 +64,7 @@ const WaterCounter = () => {
             <Typography fontWeight={900}>drink water amount: {drankWaterAmount} ml</Typography>
 
             <Input placeholder='Enter water in milliliters' type='number' inputProps={{ min: 0 }} onChange={onWaterChange} />
-            <CardActions sx={{ justifyContent: "center" }}>
+            <CardActions sx={{ justifyContent: "center", marginTop:'20px' }}>
                 <Button variant="contained" size="small" onClick={() => addWater()}>Add</Button>
             </CardActions>
         </>

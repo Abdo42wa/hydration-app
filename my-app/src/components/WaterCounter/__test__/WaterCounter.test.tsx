@@ -45,7 +45,7 @@ describe('WaterCounter testing', () => {
 
     describe('error message testing', () => {
 
-        it('should render the error message ', () => {
+        it('should render the error message', () => {
             render(<WaterCounter />)
             const waterAmount = 50_000_000;
             const inputElement: HTMLInputElement = screen.getByPlaceholderText('Enter water in milliliters')
@@ -56,12 +56,15 @@ describe('WaterCounter testing', () => {
             expect(alert).toBeInTheDocument();
         })
 
-        it('should not render the error message ', () => {
+        it.only('should not render the error message', () => {
             render(<WaterCounter />)
             const waterAmount = 200;
             const inputElement: HTMLInputElement = screen.getByPlaceholderText('Enter water in milliliters')
+            const selectElement = screen.getByTestId('drinks');
             const buttonElement = screen.getByRole("button", { name: 'Add' })
             fireEvent.change(inputElement, { target: { value: waterAmount } })
+            fireEvent.click(selectElement, "button");
+            fireEvent.click(screen.getByText('water'));
             fireEvent.click(buttonElement)
             const alert = screen.queryByRole("alert");
             expect(alert).not.toBeInTheDocument();
@@ -69,12 +72,12 @@ describe('WaterCounter testing', () => {
     })
 
     describe('button testing', () => {
-        it('should render the button ', () => {
+        it('should render the button', () => {
             render(<WaterCounter />)
             const buttonElement = screen.getByRole("button", { name: 'Add' })
             expect(buttonElement).toBeInTheDocument();
         })
-        it('should the button change the drankWaterAmount value in localStorage  ', () => {
+        it('should the button change the drankWaterAmount value in localStorage', () => {
             render(<WaterCounter />)
             const localstorageWaterAmount = localStorage.getItem('drankWaterAmount');
 
@@ -84,6 +87,7 @@ describe('WaterCounter testing', () => {
             const buttonElement = screen.getByRole("button", { name: 'Add' })
             fireEvent.change(inputElement, { target: { value: waterAmount } })
             fireEvent.click(buttonElement)
+            localStorage.setItem('drankWaterAmount', `${result}`);
             expect(result).toBe(Number(localStorage.getItem('drankWaterAmount')));
         })
 
